@@ -1,4 +1,3 @@
-// routes/register.js
 const express = require('express');
 const Register = require('../models/Register');
 const nodemailer = require('nodemailer');
@@ -7,11 +6,15 @@ const router = express.Router();
 
 // Configure Nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+ host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: false, // use TLS
   auth: {
-    user: process.env.EMAIL, // Your email address
-    pass: process.env.EMAIL_PASSWORD // Your email password
-  }
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+  logger: true, // log to console
+  debug: true, // include SMTP traffic in the logs
 });
 
 // Register route
@@ -22,18 +25,8 @@ router.post('/', async (req, res) => {
     await newRegister.save();
 
     // Send confirmation email
-
-    const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
-    
     const mailOptions = {
-      from: `"Business BuildUp Team" process.env.EMAIL`,
+      from: `"Business BuildUp Team" <${process.env.EMAIL}>`,
       to: email,
       subject: 'Registration Confirmation',
       text: `Hello ${name},\n\nThank you for registering for Business BuildUp. We have received your proposal for ${businessName}.\n\nBest regards,\nBusiness BuildUp Team`
