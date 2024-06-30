@@ -1,8 +1,18 @@
 // routes/register.js
 const express = require('express');
 const Register = require('../models/Register');
+const nodemailer = require('nodemailer');
 
 const router = express.Router();
+
+// Configure Nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL, // Your email address
+    pass: process.env.EMAIL_PASSWORD // Your email password
+  }
+});
 
 // Register route
 router.post('/', async (req, res) => {
@@ -10,7 +20,24 @@ router.post('/', async (req, res) => {
     const { name, email, businessName, phoneNumber, proposal } = req.body;
     const newRegister = new Register({ name, email, businessName, phoneNumber, proposal });
     await newRegister.save();
-    res.status(201).json(newRegister);
+
+    // Send confirmation email
+    const mailOptions = {
+      from: `"Business BuildUp Team" process.env.EMAIL`,
+      to: email,
+      subject: 'Registration Confirmation',
+      text: `Hello ${name},\n\nThank you for registering for Business BuildUp. We have received your proposal for ${businessName}.\n\nBest regards,\nBusiness BuildUp Team`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ message: 'Error sending email' });
+      } else {
+        console.log('Email sent:', info.response);
+        return res.status(201).json(newRegister);
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
