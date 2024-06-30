@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
     // Send confirmation email
     const mailOptions = {
-      from: `"Business BuildUp Team" <${process.env.MAIL}>`,
+      from: process.env.MAIL,
       to: email,
       subject: 'Registration Confirmation',
       text: `Hello ${name},\n\nThank you for registering for Business BuildUp. We have received your proposal for ${businessName}.\n\nBest regards,\nBusiness BuildUp Team`
