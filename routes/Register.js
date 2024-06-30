@@ -22,6 +22,16 @@ router.post('/', async (req, res) => {
     await newRegister.save();
 
     // Send confirmation email
+
+    const transporter = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+    
     const mailOptions = {
       from: `"Business BuildUp Team" process.env.EMAIL`,
       to: email,
