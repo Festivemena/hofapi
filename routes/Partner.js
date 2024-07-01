@@ -16,8 +16,8 @@ router.route('/')
   })
   .post(async (req, res) => { // Removed redundant '/' here
     try {
-      const { name, email, businessName, phoneNumber, proposal } = req.body;
-      const newPartner = new Partner({ name, email, businessName, phoneNumber, proposal });
+      const { name, email, phoneNumber, partnership } = req.body;
+      const newPartner = new Partner({ name, email, phoneNumber, partnership });
       await newPartner.save();
       res.status(201).json(newPartner);
     } catch (error) {
