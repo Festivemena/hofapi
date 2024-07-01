@@ -14,15 +14,15 @@ router.route('/')
       res.status(500).json({ message: 'Server error' });
     }
   })
-  .post('/', async (req, res) => {
-  try {
-    const { name, email, businessName, phoneNumber, proposal } = req.body;
-    const newRegister = new Register({ name, email, businessName, phoneNumber, proposal });
-    await newRegister.save();
-    res.status(201).json(newRegister);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+  .post(async (req, res) => { // Removed redundant '/' here
+    try {
+      const { name, email, businessName, phoneNumber, proposal } = req.body;
+      const newRegister = new Register({ name, email, businessName, phoneNumber, proposal });
+      await newRegister.save();
+      res.status(201).json(newRegister);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
 
 module.exports = router;
