@@ -21,7 +21,7 @@ app.use('/api/partner', partnerRoute);
 app.use('/api/testimony', testimonyRoute);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
