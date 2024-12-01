@@ -23,7 +23,13 @@ router.route('/')
       }
 
       // Validate category
-      const validCategories = ['Business Buildup', 'Ministry Buildup', 'Steward\'s Buildup', 'Believer\'s Buildup'];
+      const validCategories = [
+        'Business Buildup',
+        'Ministry Buildup',
+        'Steward\'s Buildup',
+        'Believer\'s Buildup',
+        'Career Buildup',
+      ];
       if (!validCategories.includes(category)) {
         return res.status(400).json({ message: 'Invalid category. Allowed categories are: ' + validCategories.join(', ') });
       }
