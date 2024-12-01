@@ -9,7 +9,7 @@ const RegisterSchema = new mongoose.Schema({
   category: { 
     type: String, 
     required: true, 
-    enum: ['Business Buildup', 'Ministry Buildup', 'Steward\'s Buildup', 'Believer\'s Buildup'] 
+    enum: ['Business Buildup', 'Ministry Buildup', 'Steward\'s Buildup', 'Believer\'s Buildup', 'Career Buildup'] 
   },
 }, { timestamps: true }); // Automatically adds createdAt and updatedAt fields
 
